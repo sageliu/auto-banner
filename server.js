@@ -1,14 +1,15 @@
-
-var port=9001;
+var port = 9001;
 var express = require('express');
-var fs=require('fs');
-var path=require('path')
+var fs = require('fs');
+var path = require('path')
 var bodyParser = require('body-parser');
 // 创建 application/x-www-form-urlencoded 编码解析
+let upload = require('./util/multerUtil')
+//multer有single()中的名称必须是表单上传字段的name名称。
 let app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.all('*',function (req, res, next) {
+app.use(bodyParser.urlencoded({extended: false}));
+app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
@@ -19,19 +20,28 @@ app.all('*',function (req, res, next) {
     next();
   }
 });
-app.post('/postData',function (req,res) {//拖拽后的文件的位置信息
+app.post('/submitPageInfo', upload.single('ImgUrl'), function (req, res) {
+    if(req.file){
+      //如果上传成功，跳到首页
+      console.log(req.file);
+      res.redirect('/')
+    }else{
+      console.log(1);
+    }
+  })
+app.post('/postData', function (req, res) {//拖拽后的文件的位置信息
 
-  var oldjInfoJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString();
-  var oldJson= JSON.parse(oldjInfoJson)
+  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
+  var oldJson = JSON.parse(oldjInfoJson)
 
-  var oldInputInfoJson={
-    sid:oldJson.sid,
-    urlLp:oldJson.urlLp,
-    urlTp:oldJson.urlTp,
-    title:oldJson.title
+  var oldInputInfoJson = {
+    sid: oldJson.sid,
+    urlLp: oldJson.urlLp,
+    urlTp: oldJson.urlTp,
+    title: oldJson.title
   }
-  var newInfoJson=Object.assign(req.body,oldInputInfoJson)//为了处理覆盖的问题
-  fs.writeFile(path.join(__dirname,'./dist/data/req.txt'),JSON.stringify(newInfoJson),function(err) {
+  var newInfoJson = Object.assign(req.body, oldInputInfoJson)//为了处理覆盖的问题
+  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
     }
@@ -39,12 +49,12 @@ app.post('/postData',function (req,res) {//拖拽后的文件的位置信息
   })
   res.send('最新位置已保存');
 })
-app.post('/setInfo',function (req,res) {//设置页面的内容信息
-  var oldjInfoJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString()
+app.post('/setInfo', function (req, res) {//设置页面的内容信息
+  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   // console.log(JSON.parse(oldjInfoJson));
   // console.log(req.body);
-  var newInfoJson=Object.assign(JSON.parse(oldjInfoJson),req.body)
-  fs.writeFile(path.join(__dirname,'./dist/data/req.txt'),JSON.stringify(newInfoJson),function(err) {
+  var newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
+  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
     }
@@ -52,12 +62,12 @@ app.post('/setInfo',function (req,res) {//设置页面的内容信息
   })
   res.send('info1️已保存');
 })
-app.post('/postBtnInfo',function (req,res) {//设置btn的宽高信息
-  var oldjInfoJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString()
+app.post('/postBtnInfo', function (req, res) {//设置btn的宽高信息
+  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   // console.log(JSON.parse(oldjInfoJson));
   // console.log(req.body);
-  var newInfoJson=Object.assign(JSON.parse(oldjInfoJson),req.body)
-  fs.writeFile(path.join(__dirname,'./dist/data/req.txt'),JSON.stringify(newInfoJson),function(err) {
+  var newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
+  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
     }
@@ -65,34 +75,34 @@ app.post('/postBtnInfo',function (req,res) {//设置btn的宽高信息
   })
   res.send('submit ok')
 })
-app.get('/output',function (req,res) {//输出新的html 文件
-  var oldInfoJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString()
-  var oInfo=JSON.parse(oldInfoJson);
+app.get('/output', function (req, res) {//输出新的html 文件
+  var oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
+  var oInfo = JSON.parse(oldInfoJson);
   console.log(oInfo);
-  var sHtml='<html><head>\n' +
+  var sHtml = '<html><head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
     '  <!---->\n' +
     '  <meta name="twitter:card" content="summary_large_image">\n' +
     '  <meta name="twitter:site" content="@stager">\n' +
     '  <meta name="twitter:title" content="Stager Live Stager News">\n' +
-    '  <meta name="twitter:image" class="urlTp" content="'+oInfo.urlTp+'">\n' +
+    '  <meta name="twitter:image" class="urlTp" content="' + oInfo.urlTp + '">\n' +
     '  <meta name="twitter:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
-    '  <meta property="og:url" class="urlLp" content="'+oInfo.urlLp+'">\n' +
+    '  <meta property="og:url" class="urlLp" content="' + oInfo.urlLp + '">\n' +
     '  <meta property="og:title" content="Stager Live Stager News">\n' +
     '  <meta property="og:type" content="article">\n' +
     '  <meta property="og:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
-    '  <meta property="og:image" class="urlTp" content="'+oInfo.urlTp+'">\n' +
+    '  <meta property="og:image" class="urlTp" content="' + oInfo.urlTp + '">\n' +
     '  <!---->\n' +
     '  <meta name="description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
     '  <meta name="keywords" content="stager,live,hot live">\n' +
     '  <meta property="fb:app_id" content="523144861213633">\n' +
     '  <meta property="og:width" content="800">\n' +
     '  <meta property="og:height" content="414">\n' +
-    '  <title>'+oInfo.title+'</title>\n' +
+    '  <title>' + oInfo.title + '</title>\n' +
     '  <link rel="shortcut icon" href="favicon.png">\n' +
     '  <script>\n' +
-    'console.warn(\'将根据已有的meta标签来设置缩放比例\');\n'+
+    'console.warn(\'将根据已有的meta标签来设置缩放比例\');\n' +
     '        window.fbAsyncInit = function () {\n' +
     '          FB.init({\n' +
     '            appId: \'523144861213633\',\n' +
@@ -128,7 +138,7 @@ app.get('/output',function (req,res) {//输出新的html 文件
     '          setTimeout(function () {\n' +
     '            setRemFontSize();\n' +
     '          }, 200)\n' +
-    '        });'+
+    '        });' +
     '  </script>\n' +
     '  <style>\n' +
     '    body {\n' +
@@ -147,9 +157,9 @@ app.get('/output',function (req,res) {//输出新的html 文件
     '    }\n' +
     '    #btn {\n' +
     '      position: absolute;\n' +
-    '      line-height: '+oInfo.btnHeight+';\n' +
-    '      height: '+oInfo.btnHeight+';\n' +
-    '      width: '+oInfo.btnWidth+';\n' +
+    '      line-height: ' + oInfo.btnHeight + ';\n' +
+    '      height: ' + oInfo.btnHeight + ';\n' +
+    '      width: ' + oInfo.btnWidth + ';\n' +
     '      text-align: center;\n' +
     '    }\n' +
     '  </style>\n' +
@@ -233,9 +243,9 @@ app.get('/output',function (req,res) {//输出新的html 文件
     '    }\n' +
     '  };\n' +
     '</script>\n' +
-    '<div id="btn" sid="'+oInfo.sid+'" style="bottom: inherit; left: '+oInfo.left+'; top: '+oInfo.top+'"></div></body></html>';
+    '<div id="btn" sid="' + oInfo.sid + '" style="bottom: inherit; left: ' + oInfo.left + '; top: ' + oInfo.top + '"></div></body></html>';
   // '<div id="btn" sid="'+oInfo.sid+'" style="bottom: inherit; left: '+oInfo.left+'; top: '+oInfo.top+'">'+oInfo.buttonShow+'</div></body></html>'
-  fs.writeFile(path.join(__dirname,'./dist/views/lp.html'),sHtml,function(err) {
+  fs.writeFile(path.join(__dirname, './dist/views/lp.html'), sHtml, function (err) {
     if (err) {
       return console.error(err);
     }
@@ -244,7 +254,7 @@ app.get('/output',function (req,res) {//输出新的html 文件
   res.send('ok')
 })
 
-var server=app.listen(port,function () {
+var server = app.listen(port, function () {
   var host = server.address().address
   var port = server.address().port
 

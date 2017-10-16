@@ -1,28 +1,41 @@
 <template>
-  <div id="pageInfoWrap">
+  <form id="pageInfoWrap" :action="submitPageInfoUrl" method="post">
     <label for="ImgUrl" id="fileWrap">
       点此上传LP背景图
-        <input type="file" name="ImgUrl" @change="imgUrl"   enctype="multipart/form-data" ref="inputFile">
+        <input type="file" name="ImgUrl" @change="imgUrl" enctype="multipart/form-data" ref="inputFile">
     </label>
-
-  </div>
+    <div @click="submitPageInfo">上传</div>
+  </form>
 </template>
 
 <script>
+
+  import axios from 'axios'
   import store from '../../vuex/store'
   import {mapMutations,mapActions} from 'vuex'
   export default {
     store,
     data(){
       return {
-        asd:''
+        submitPageInfoUrl:'http://127.0.0.1:9001/submitPageInfo'
       }
     },
     methods:{
       imgUrl(){
         store.commit('changeImgUrl',URL.createObjectURL(this.$refs.inputFile.files[0]))
       },
-      ...mapActions(['changeImgUrl'])
+      ...mapActions(['changeImgUrl']),
+      submitPageInfo(){
+        let formData = new FormData();
+//        formData.end('name', this.name);
+//        formData.append('age', this.age);
+        formData.append('ImgUrl', this.$refs.inputFile.files[0]);
+        axios.post(this.submitPageInfoUrl,formData).then(data=>{
+          console.log(data);
+        }).catch(err=>{
+          console.log(err);
+        })
+      }
     }
   }
 </script>
