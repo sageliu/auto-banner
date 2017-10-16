@@ -1,5 +1,6 @@
 const state={
-  count:0
+  imgUrl:{i:'/src/assets/lp.jpeg'}
 }
 
 export default state;
+

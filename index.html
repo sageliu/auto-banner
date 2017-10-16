@@ -2,7 +2,89 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!---->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@stager"/>
+    <meta name="twitter:title" content="Stager Live Stager News"/>
+    <meta name="twitter:image" class="urlTp" content="http://pic.stagerlive.jp/h5/banner/0817-news/twitter.png"/>
+    <meta name="twitter:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。"/>
+    <meta property="og:url" class="urlLp" content="http://pic.stagerlive.jp/h5/banner/0817-news/lp.html"/>
+    <meta property="og:title" content="Stager Live Stager News"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。"/>
+    <meta property="og:image" class="urlTp" content="http://pic.stagerlive.jp/h5/banner/0817-news/twitter.png"/>
+    <!---->
+    <meta name="description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。"/>
+    <meta name="keywords" content="stager,live,hot live"/>
+    <meta property="fb:app_id" content="523144861213633"/>
+    <meta property="og:width" content="800"/>
+    <meta property="og:height" content="414"/>
+    <title>今週の公式配信は、モデルコンテスト特集</title>
+    <link rel="shortcut icon" href="favicon.png">
     <title>auto-banner</title>
+    <style>
+      body {
+        position: relative;
+        width: 100%;
+      }
+
+      html, body, img, div {
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+    <script>
+      console.warn('将根据已有的meta标签来设置缩放比例');
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '523144861213633',
+          xfbml: true,
+          version: 'v2.8'
+        });
+        (function (d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if(d.getElementById(id)) {
+            return;
+          }
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      }
+
+      function setRemFontSize(baseSize, baseWidth) {
+        var baseSize = baseSize || 20,
+          baseWidth = baseWidth || 375,
+          clientWidth = document.documentElement.clientWidth;
+        if(clientWidth < 320) {
+          clientWidth = 320;
+        }
+        if(clientWidth > 750) {
+          clientWidth = 750;
+        }
+        document.getElementsByTagName('html')[0].style.fontSize = clientWidth / baseSize + 'px'
+      }
+      setRemFontSize();
+      window.addEventListener("resize", function () {
+        setTimeout(function () {
+          setRemFontSize();
+        }, 200)
+      });
+      const baseSize = parseFloat(document.getElementsByTagName('html')[0].style.fontSize);// px / this = rem
+
+      function pxToRem(num) {
+        return parseFloat(num) / baseSize + 'rem'
+      }
+
+      function remToPx(num) {
+        return parseFloat(num) * baseSize
+      }
+
+    </script>
   </head>
   <body>
     <div id="app"></div>

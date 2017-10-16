@@ -56,6 +56,7 @@ autoBanner
 ###建议
 > 异步请求请使用axios
 - 文档 ：https://www.kancloud.cn/yunye/axios/234845
+
 ```
 import axios from 'axios'
 //axios不能被Vue.use,因为axios没有提供install这个methods
