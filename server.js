@@ -10,6 +10,7 @@ let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.all('*', function (req, res, next) {
+  res.header('charset', 'utf8');
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
@@ -20,15 +21,28 @@ app.all('*', function (req, res, next) {
     next();
   }
 });
-app.post('/submitPageInfo', upload.single('ImgUrl'), function (req, res) {
+app.post('/submitImgInfo', upload.single('ImgUrl'), function (req, res) {
     if(req.file){
       //如果上传成功，跳到首页
       console.log(req.file);
-      res.redirect('/')
+      // res.redirect('/')
+      res.end('上传背景图完成')
     }else{
       console.log(1);
     }
   })
+app.get('/getState',function (req,res) {
+  let stateJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString();
+  console.log(typeof stateJson);
+  res.send(stateJson);
+})
+app.post('/postState',function (req,res) {
+  console.log(JSON.stringify(req.body));
+  fs.writeFile(path.join(__dirname,'./dist/data/req.txt'),JSON.stringify(req.body),err=>{
+    console.log(err);
+  });
+  res.send('ok');
+})
 app.post('/postData', function (req, res) {//拖拽后的文件的位置信息
 
   var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();

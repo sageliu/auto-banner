@@ -1,58 +1,67 @@
 <template>
-  <form id="pageInfoWrap" :action="submitPageInfoUrl" method="post">
-    <label for="ImgUrl" id="fileWrap">
-      点此上传LP背景图
-        <input type="file" name="ImgUrl" @change="imgUrl" enctype="multipart/form-data" ref="inputFile">
-    </label>
-    <div @click="submitPageInfo">上传</div>
-  </form>
+  <div>
+    <form id="" class="pageInfoWrap" >
+      <label for="" class="submitFileLabel">
+        页面的title:
+      </label>
+      <input class="editInput" type="number" name="" v-model="pageInfo.thisTitle" placeholder="请输入页面title">
+
+      <label for="" class="submitFileLabel">
+        页面的urlTp:
+      </label>
+      <input class="editInput" type="text" name="" v-model="pageInfo.thisUrlTp" placeholder="请输入urlTp">
+      <label for="" class="submitFileLabel">
+        页面的urlLp:
+      </label>
+      <input class="editInput" type="text" name="" v-model="pageInfo.thisUrlLp" placeholder="请输入urlLp">
+
+      <!--<label for="" class="submitFileLabel">-->
+        <!--按钮功能选择:-->
+      <!--</label>-->
+      <!--<select v-model="">-->
+        <!--<option disabled value="default">请选择该按钮的功能</option>-->
+        <!--<option value="open">打开个人中心</option>-->
+        <!--<option value="twitter">跳转到twitter</option>-->
+        <!--<option value="line">跳转到line</option>-->
+      <!--</select>-->
+
+      <div class="closeBtn" @click="methodRun">&times;</div>
+      <button type="button" class="submitDragAbleInfoBtn btn" @click="submitPageInfo">确定</button>
+    </form>
+  </div>
 </template>
-
 <script>
-
-  import axios from 'axios'
-  import store from '../../vuex/store'
-  import {mapMutations,mapActions} from 'vuex'
+  import {mapState,mapGetters} from 'vuex'
   export default {
-    store,
+    props:[
+      'method'
+    ],
     data(){
-      return {
-        submitPageInfoUrl:'http://127.0.0.1:9001/submitPageInfo'
+      return{
+        pageInfo:{
+          thisTitle:'',
+          thisUrlTp:'',
+          thisUrlLp:''
+        }
       }
     },
+    beforeMount(){
+      this.pageInfo={...this.pageInfo,...this.$store.getters.getPageInfo}
+    },
+    computed:{
+      ...mapGetters(['getPageInfo'])
+    },
     methods:{
-      imgUrl(){
-        store.commit('changeImgUrl',URL.createObjectURL(this.$refs.inputFile.files[0]))
+      methodRun(){
+        this.method();
       },
-      ...mapActions(['changeImgUrl']),
+
       submitPageInfo(){
-        let formData = new FormData();
-//        formData.end('name', this.name);
-//        formData.append('age', this.age);
-        formData.append('ImgUrl', this.$refs.inputFile.files[0]);
-        axios.post(this.submitPageInfoUrl,formData).then(data=>{
-          console.log(data);
-        }).catch(err=>{
-          console.log(err);
-        })
+        this.$store.commit('submitPageInfo',this.pageInfo);
+        this.method();
       }
     }
   }
 </script>
-<style scoped lang="scss">
-  #pageInfoWrap{
-    background: rgba(0,0,0,.7);
-    color:lawngreen;
-  }
-  #fileWrap{
-    position: relative;
-
-    input[name=ImgUrl]{
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  }
-
+<style lang="scss" scoped>
 </style>

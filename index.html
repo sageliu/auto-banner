@@ -77,11 +77,15 @@
       const baseSize = parseFloat(document.getElementsByTagName('html')[0].style.fontSize);// px / this = rem
 
       function pxToRem(num) {
+        if(/rem$/.test(num))return num;
+        if(isNaN(parseFloat(num)))return num;
         return parseFloat(num) / baseSize + 'rem'
       }
 
       function remToPx(num) {
-        return parseFloat(num) * baseSize
+        if(/px$/.test(num))return num;
+        if(isNaN(parseFloat(num)))return num;
+        return parseFloat(num) * baseSize;
       }
 
     </script>
