@@ -88,7 +88,6 @@
       submitDragAbleInfo(){
         let formData= new FormData();
 //        console.log(this.thisState);
-
 //        formData.append('thisHeight')
         this.$store.commit('submitDragAbleInfo',{item:this.item,it:this.thisState});
 
