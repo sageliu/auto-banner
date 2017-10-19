@@ -113,8 +113,8 @@ app.get('/output', function (req, res) {//输出新的html 文件
   '            setRemFontSize();\n' +
   '          }, 200)\n' +
   '        });\n' ;
-  let scriptAjax='  function ajax({url, type = \'GET\', isAsync = true,isJson=false, callback,data=null}) {\n' +//封装的ajax方法
-    '    if (typeof callback !== \'function\' || !window.XMLHttpRequest) return;\n' +
+  let scriptAjax='  function ajax({url, type = \'GET\', isAsync = true,isJson=false, success,data=null}) {\n' +//封装的ajax方法
+    '    if (typeof success !== \'function\' || !window.XMLHttpRequest) return;\n' +
     '    var xhr = new XMLHttpRequest()\n' +
     '    xhr.open(type, url, isAsync)\n' +
     '//    xhr.withCredentials = true\n' +
@@ -124,7 +124,7 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '    xhr.onreadystatechange = function () {\n' +
     '      if (xhr.readyState === 4) {\n' +
     '        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n' +
-    '          callback(xhr.responseText)\n' +
+    '          success(xhr.responseText)\n' +
     '        }\n' +
     '      }\n' +
     '    }\n' +
@@ -187,7 +187,6 @@ app.get('/output', function (req, res) {//输出新的html 文件
     'var u = navigator.userAgent;\n' +
     '  var isIOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端\n' +
     '  var isAndroid = u.indexOf(\'Android\') > -1 || u.indexOf(\'Adr\') > -1; //android\n' +
-    '  var nowTimeApp = new Date().getTime();\n' +
     '  if(isIOS) {\n' +
     '    try {\n' +
     '      window.webkit.messageHandlers.stagerGotoHomePage.postMessage({\n' +
@@ -223,7 +222,24 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '   });\n' +
     ' }, 2000);\n' +
     '};\n';
-  let script7='function goAdrErr(userId,nowTimeApp){\n' +//安卓跳转个人主页失败执行
+  let script7='function goIosVideoErr(userId,nowTimeApp){//ios跳转视频页失败执行\n' +
+    '    window.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=i" + nowTimeApp; //ios app协议\n' +
+    '    setTimeout(function () {\n' +
+    '      ajax({\n' +
+    '        type: "get",\n' +
+    '        url: "http://ip.stagerlive.jp:8085/api/v1/h5?gettoken=i" + nowTimeApp,\n' +
+    '        success: function (data) {\n' +
+    '          var ip = JSON.parse(data)["ip"];\n' +
+    '          if(!ip) { //下载app\n' +
+    '            window.location.href = \'https://app.adjust.com/b2elxd\';\n' +
+    '          } else { //在app打开\n' +
+    '            console.log("stagerLive");\n' +
+    '          }\n' +
+    '        }\n' +
+    '      });\n' +
+    '    }, 2000);\n' +
+    '  }\n';
+  let script8='function goAdrErr(userId,nowTimeApp){\n' +//安卓跳转个人主页失败执行
     '\twindow.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=a" + nowTimeApp; //Android app协议\n' +
     '  setTimeout(function () {\n' +
     '    $.ajax({\n' +
@@ -293,23 +309,26 @@ app.get('/output', function (req, res) {//输出新的html 文件
   let html3 = '<script>  var u = navigator.userAgent;\n' +
     '  var isIOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); /*ios终端*/\n' +
     '  var isAndroid = u.indexOf(\'Android\') > -1 || u.indexOf(\'Adr\') > -1; /*android*/\n' +
-    '  var nowTimeApp;\n' +
+    ' // var nowTimeApp;\n' +
   'function fn() { alert("未绑定事件") };\n' +
     'let obj={sid:0};\n' +
   'Array.prototype.map.call(document.getElementsByClassName("btn"),item=>{\n' +
     'obj.sid=item.getAttribute("data-sid").length>0?item.getAttribute("data-sid"):obj.sid;\n' +
     '});\n' +
     'let userId=obj.sid;\n' +
-  // 'window.onload=function() { document.getElementsByClassName("btn")[1].onclick=fn; }' +
+    'let nowTimeApp = new Date().getTime();\n' +
+
+    // 'window.onload=function() { document.getElementsByClassName("btn")[1].onclick=fn; }' +
   '</script>' +
   '<script>\n' +
-  scriptAjax+
+    scriptAjax+
     script1+
     script2+
     script3+
     script4+
     script6+
     script7+
+    script8+
   '</script>\n' +
   '</body></html>';
   let script111='function(){\n' +
@@ -320,10 +339,10 @@ app.get('/output', function (req, res) {//输出新的html 文件
     let method='';
     switch(item.info.selected){
       case 'open':
-        method='goAppHome()';
+        method='goAppHome(userId)';
         break;
         case 'vedio':
-        method='goAppHome()';
+        method='goAppHome(userId)';
         break;
        case 'line':
         method='goLine()';
