@@ -2,7 +2,7 @@
     <div key="1">
       <form id="imgInfoWrap" v-show="isShow">
           <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
-            <input class="fileWrap" type="file" name="ImgUrl" @change="imgUrl"  enctype="multipart/form-data" ref="inputFile">
+            <input class="fileWrap" type="file" name="lp" @change="imgUrl"  enctype="multipart/form-data" ref="inputFile">
             <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
           </AddBtn>
         <label for="ImgUrl" class="submitFileLabel">
@@ -43,7 +43,7 @@
 //      ...mapActions(['changeImgUrl']),
       submitImgInfo(){
         let formData = new FormData();
-        formData.append('ImgUrl', this.$refs.inputFile.files[0]);
+        formData.append('lp', this.$refs.inputFile.files[0]);
 //        if(formData.imgUrl===undefined)return;
         axios.post(this.submitImgInfoUrl,formData).then(data=>{
           console.log('--------'+data.data+'--------');

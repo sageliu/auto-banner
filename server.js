@@ -23,24 +23,25 @@ app.all('*', function (req, res, next) {
     next();
   }
 });
-app.post('/submitImgInfo', upload.single('ImgUrl'), function (req, res) {
-    if(req.file){
-      //如果上传成功，跳到首页
-      console.log(req.file);
-      // res.redirect('/')
-      res.end('上传背景图完成')
-    }else{
-      console.log(1);
-    }
-  })
-app.get('/getState',function (req,res) {
-  let stateJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString();
+app.post('/submitImgInfo', upload.single('lp'), function (req, res) {//上传图片的逻辑，用到了multer,
+  if (req.file) {
+    //如果上传成功，跳到首页
+    console.log(req.file);
+    // res.redirect('/')
+    res.end('------上传背景图完成------');
+  } else {
+    res.end('------upload error------');
+    console.log('------upload error------');
+  }
+})
+app.get('/getState', function (req, res) {
+  let stateJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
   // console.log(typeof stateJson);//string
   res.send(stateJson);
 })
-app.post('/postState',function (req,res) {
+app.post('/postState', function (req, res) {
   console.log(JSON.stringify(req.body));
-  fs.writeFile(path.join(__dirname,'./dist/data/req.txt'),JSON.stringify(req.body),err=>{
+  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(req.body), err => {
     console.log(err);
   });
   res.send('ok');
@@ -50,7 +51,8 @@ app.get('/output', function (req, res) {//输出新的html 文件
   let oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   let oInfo = JSON.parse(oldInfoJson);
   console.log(oInfo);
-  let imgName=oInfo.imgUrl.i.split('/')[3];
+  // let imgName=oInfo.imgUrl.i.split('/')[3];
+  let imgName = 'lp.png';
   let html1 = '<html><head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
@@ -128,44 +130,25 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '      width: 20rem;\n' +
     '    }\n' +
     '    .btn {\n' +
+    '      border: 3px solid #fff;\n' +
     '      position: absolute;\n' +
+    '      z-index: 90;\n' +
     '    }\n' +
     '  </style>\n' +
     '</head>\n' +
     '<body style="">\n' +
-    '<img src="./'+imgName+'" alt="" id="lp">\n' +
-    '<script>\n' +
-    '  function ajax({url, type = \'GET\', isAsync = true,isJson=false, callback,data=null}) {\n' +
-    '    if (typeof callback !== \'function\' || !window.XMLHttpRequest) return;\n' +
-    '    var xhr = new XMLHttpRequest()\n' +
-    '    xhr.open(type, url, isAsync)\n' +
-    '//    xhr.withCredentials = true\n' +
-    '    if(isJson){\n' +
-    '      xhr.setRequestHeader("Content-type", "application/json");\n' +
-    '    }\n' +
-    '    xhr.onreadystatechange = function () {\n' +
-    '      if (xhr.readyState === 4) {\n' +
-    '        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n' +
-    '          callback(xhr.responseText)\n' +
-    '        }\n' +
-    '      }\n' +
-    '    }\n' +
-    '    console.log(data);\n' +
-    '    xhr.send(data)\n' +
-    '  }\n' +
-    '</script>\n';
+    '<img src="./' + imgName + '" alt="" id="lp">\n' ;
 
-    let html3='<script>\n' +
-    '  var u = navigator.userAgent;\n' +
-    '  var isIOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端\n' +
-    '  var isAndroid = u.indexOf(\'Android\') > -1 || u.indexOf(\'Adr\') > -1; //android\n' +
+    let html3= '<script>  var u = navigator.userAgent;\n' +
+    '  var isIOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); /*ios终端*/\n' +
+    '  var isAndroid = u.indexOf(\'Android\') > -1 || u.indexOf(\'Adr\') > -1; /*android*/\n' +
     '  var nowTimeApp;\n' +
     '  document.body.onTouchStart = function (e) {\n' +
     '    e = e || window.event;\n' +
     '    var target = e.target || e.srcElement;\n' +
     '    if (target.id !== \'btn\') {\n' +
     '      return\n' +
-    '    }//如果点击的不是这个按钮，就不会触发任何效果\n' +
+    '    }/*如果点击的不是这个按钮，就不会触发任何效果*/\n' +
     '    nowTimeApp = new Date().getTime();\n' +
     '    var userId = target.getAttribute("sid");\n' +
     '    console.log(userId);\n' +
@@ -175,15 +158,15 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '          targetUserId: userId\n' +
     '        });\n' +
     '      } catch (e) {\n' +
-    '        window.location.href = "com.xhh.stagerlive.openfromWeb://homepageuserid=" + userId + "&token=i" + nowTimeApp; //ios app协议\n' +
+    '        window.location.href = "com.xhh.stagerlive.openfromWeb://homepageuserid=" + userId + "&token=i" + nowTimeApp; /*ios app协议*/\n' +
     '        setTimeout(function () {\n' +
     '          ajax({\n' +
     '            url: "http://101.201.114.80:8085/api/v1/h5?gettoken=i" + nowTimeApp,\n' +
     '            callback: function (data) {\n' +
     '              var ip = JSON.parse(data)[\'ip\'];\n' +
-    '              if (!ip) { //下载app\n' +
+    '              if (!ip) { /*下载app*/\n' +
     '                window.location.href = \'https://app.adjust.com/b2elxd\';\n' +
-    '              } else { //在app打开\n' +
+    '              } else { /*在app打开*/\n' +
     '                console.log("stagerLive");\n' +
     '              }\n' +
     '            }\n' +
@@ -194,15 +177,15 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '      try {\n' +
     '        AndroidEvent.GotoHomePage(userId);\n' +
     '      } catch (e) {\n' +
-    '        window.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=a" + nowTimeApp; //Android app协议\n' +
+    '        window.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=a" + nowTimeApp; /*Android app协议*/\n' +
     '        setTimeout(function () {\n' +
     '          ajax({\n' +
     '            url: "http://101.201.114.80:8085/api/v1/h5?gettoken=a" + nowTimeApp,\n' +
     '            callback: function (data) {\n' +
     '              var ip = JSON.parse(data)[\'ip\'];\n' +
-    '              if (!ip) { // 手机没app\n' +
+    '              if (!ip) { /* 手机没app*/\n' +
     '                window.location.href = \'https://app.adjust.com/w3yjwl\';\n' +
-    '              } else { // 手机 有app\n' +
+    '              } else { /* 手机 有app*/\n' +
     '                console.log("stagerLive");\n' +
     '              }\n' +
     '            }\n' +
@@ -211,16 +194,36 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '      }\n' +
     '    }\n' +
     '  };\n' +
-      'function fn(e) { console.log(e.target) }' +
-    '</script></body></html>';
-    let html2=''
-    oInfo.dragAbleBtnItems.map(item=>{
-      // console.log(item.info);
-      html2+= '<div class="btn" sid="' + item.info.thisSid + '" style="bottom: inherit; left: ' + item.info.thisLeft + '; top: ' + item.info.thisTop + '; width:'+item.info.thisWidth+';height: '+item.info.thisHeight+';border-radius:'+item.info.thisBorderRadius + ';"onclick="fn"></div>'
-
-    })
-
-  fs.writeFile(path.join(__dirname, './dist/bgImages/lp.html'), html1+html2+html3, function (err) {
+      'function fn() { alert(1) };\n' +
+      // 'window.onload=function() { document.getElementsByClassName("btn")[1].onclick=fn; }' +
+    '</script>' +
+      '<script>\n' +
+      '  function ajax({url, type = \'GET\', isAsync = true,isJson=false, callback,data=null}) {\n' +
+      '    if (typeof callback !== \'function\' || !window.XMLHttpRequest) return;\n' +
+      '    var xhr = new XMLHttpRequest()\n' +
+      '    xhr.open(type, url, isAsync)\n' +
+      '//    xhr.withCredentials = true\n' +
+      '    if(isJson){\n' +
+      '      xhr.setRequestHeader("Content-type", "application/json");\n' +
+      '    }\n' +
+      '    xhr.onreadystatechange = function () {\n' +
+      '      if (xhr.readyState === 4) {\n' +
+      '        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {\n' +
+      '          callback(xhr.responseText)\n' +
+      '        }\n' +
+      '      }\n' +
+      '    }\n' +
+      '    console.log(data);\n' +
+      '    xhr.send(data)\n' +
+      '  }\n' +
+      '</script>\n'+
+      '</body></html>';
+  let html2 = ''
+  oInfo.dragAbleBtnItems.map(item => {
+    // console.log(item.info);
+    html2 += '<div class="btn" sid="' + item.info.thisSid + '" style="bottom: inherit; left: ' + item.info.thisLeft + '; top: ' + item.info.thisTop + '; width:' + item.info.thisWidth + ';height: ' + item.info.thisHeight + ';border-radius:' + item.info.thisBorderRadius + '; " onclick="fn()"></div>'
+  })
+  fs.writeFile(path.join(__dirname, './dist/bgImages/lp.html'), html1 + html2 + html3, function (err) {
     if (err) {
       return console.error(err);
     }

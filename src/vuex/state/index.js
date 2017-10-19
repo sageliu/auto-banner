@@ -1,5 +1,5 @@
 const state = {
-  imgUrl: {i: '/dist/bgImages/ImgUrl.jpg'},
+  imgUrl: {i: '/dist/bgImages/lp.png'},
   dragAbleBtnItems: [
     // {
     //   info:{
