@@ -44,52 +44,7 @@ app.post('/postState',function (req,res) {
   });
   res.send('ok');
 })
-app.post('/postData', function (req, res) {//拖拽后的文件的位置信息
 
-  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
-  let oldJson = JSON.parse(oldjInfoJson)
-
-  let oldInputInfoJson = {
-    sid: oldJson.sid,
-    urlLp: oldJson.urlLp,
-    urlTp: oldJson.urlTp,
-    title: oldJson.title
-  }
-  let newInfoJson = Object.assign(req.body, oldInputInfoJson)//为了处理覆盖的问题
-  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
-    if (err) {
-      return console.error(err);
-    }
-    // console.log("数据写入成功！");
-  })
-  res.send('最新位置已保存');
-})
-app.post('/setInfo', function (req, res) {//设置页面的内容信息
-  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
-  // console.log(JSON.parse(oldjInfoJson));
-  // console.log(req.body);
-  let newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
-  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
-    if (err) {
-      return console.error(err);
-    }
-    // console.log("数据写入成功！");
-  })
-  res.send('info1️已保存');
-})
-app.post('/postBtnInfo', function (req, res) {//设置btn的宽高信息
-  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
-  // console.log(JSON.parse(oldjInfoJson));
-  // console.log(req.body);
-  let newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
-  fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
-    if (err) {
-      return console.error(err);
-    }
-    // console.log("数据写入成功！");
-  })
-  res.send('submit ok')
-})
 app.get('/output', function (req, res) {//输出新的html 文件
   let oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   let oInfo = JSON.parse(oldInfoJson);

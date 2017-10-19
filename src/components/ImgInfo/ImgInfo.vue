@@ -25,8 +25,8 @@
     store,
     data(){
       return {
-        isShow:true,
-        submitImgInfoUrl:'http://127.0.0.1:9001/submitImgInfo',
+        isShow:false,
+        submitImgInfoUrl:url+'/submitImgInfo',
         isDisAbled:true,
         items:[]
       }
@@ -47,6 +47,7 @@
 //        if(formData.imgUrl===undefined)return;
         axios.post(this.submitImgInfoUrl,formData).then(data=>{
           console.log('--------'+data.data+'--------');
+          this.changeShow();
         }).catch(err=>{
           console.log(err);
         })

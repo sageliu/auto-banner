@@ -69,17 +69,19 @@
     },
     watch: {
       item:{
-        handler(oldValue,newValue){
+        handler(oldValue,newValue){//写成对象监听更加的方便，不然要写很多遍watch
           console.log('------按钮位置发生变化，请记得输出------')
           this.addOrMoveEndChangeData()
         },
         deep:true
       },
-      thisState: {//写成对象监听更加的方便，不然要写很多遍watch
-        handler(oldValue, newValue) {
-//          console.log(newValue);
-        },
-        deep: true
+      'thisState.selected':{//监听对象的属性，需要用引号括起来
+        handler(newValue,oldValue){
+          if(newValue!=='open'){
+            this.thisState.thisSid='';
+            console.log(this.thisState);
+          }
+        }
       }
     },
     methods:{

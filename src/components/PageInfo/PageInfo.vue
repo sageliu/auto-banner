@@ -4,7 +4,7 @@
       <label for="" class="submitFileLabel">
         页面的title:
       </label>
-      <input class="editInput" type="number" name="" v-model="pageInfo.thisTitle" placeholder="请输入页面title">
+      <input class="editInput" type="text" name="" v-model="pageInfo.thisTitle" placeholder="请输入页面title">
 
       <label for="" class="submitFileLabel">
         页面的urlTp:

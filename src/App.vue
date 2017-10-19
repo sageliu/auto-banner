@@ -36,7 +36,7 @@
     },
     beforeMount() {
       //获取回来数据
-      axios.get('http://127.0.0.1:9001/getState')
+      axios.get(url+'/getState')
         .then(data => {
 //          this.resetState(data.data);
           this.$store.commit('resetState', data.data)//修改state
@@ -53,7 +53,7 @@
       },
       outPutHtml() {
         let stateJson = this.$store.getters.getState;//getters获得的数据就是json了。不要再进行JSON.stringify转换成json格式
-        axios.post('http://127.0.0.1:9001/postState', stateJson)
+        axios.post(url+'/postState', stateJson)
           .then(data => {
 //            console.log(data);
             console.log('------成功保存页面数据------')
