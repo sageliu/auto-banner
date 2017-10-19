@@ -3,14 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    ul, ol {
+      list-style: none outside none;
+      margin: 0;
+      padding: 0;
+    }
+    .roundabout-holder {
+      width: 750px;
+      height: 466px;
+      margin: 0 auto;
+      margin-top: -45px;
+    }
+    .roundabout-moveable-item {
+      width: 646px;
+      height: 386px;
+      cursor: pointer;
+      border: 3px solid #ccc;
+      border: 3px solid rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      overflow: hidden;
+    }
+    .roundabout-moveable-item img {
+      width: 100%;
+    }
+  </style>
+
 </head>
 <body>
+<ul id="myRoundabout" class="roundabout-holder" style="padding: 0px; position: relative; z-index: 100;width: 750px;
+    height: 466px;
+    margin: 0 auto;
+    margin-top: -45px;">
+  <li class="roundabout-moveable-item roundabout-in-focus" current-scale="1.0000" style="position: absolute; left: 48.3px; top: 37.4px; width: 646px; height: 386px; opacity: 1; z-index: 400; font-size: 12px;"><a href="http://www.sdyljykj.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=18&amp;id=49" target="_blank"><img src="http://www.sdyljykj.com/uploadfile/2017/1013/thumb_417_295_20171013043904105.jpg"></a></li>
+  <li class="roundabout-moveable-item" current-scale="0.5500" style="position: absolute; left: 485.9px; top: 124.3px; width: 355.3px; height: 212.3px; opacity: 1; z-index: 175; font-size: 6.6px;"><a href="http://www.sdyljykj.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=19&amp;id=32" target="_blank"><img src="http://www.sdyljykj.com/uploadfile/2017/1013/20171013045504632.jpg"></a></li>
+  <li class="roundabout-moveable-item" current-scale="0.5500" style="position: absolute; left: -98.7px; top: 124.3px; width: 355.3px; height: 212.3px; opacity: 1; z-index: 175; font-size: 6.6px;"><a href="http://www.sdyljykj.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=17&amp;id=31" target="_blank"><img src="http://www.sdyljykj.com/uploadfile/2017/0905/20170905044005590.jpg"></a></li>
+</ul>
+
+<style>
+  .sqbg3 {
+    background-image: url(http://www.zhcw.com/images/2014/video/sq3.jpg);
+  }
+  .sqbg2 {
+    background-image: url(http://www.zhcw.com/images/2014/video/sq2.jpg);
+  }
+  .sqbg1 {
+    background-image: url(http://www.zhcw.com/images/2014/video/sq1.jpg);
+  }
+
+  .sq {
+    width: 100%;
+    height: 149px;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  a, area {
+    blr: expression(this.onFocus=this.blur());
+  }
+</style>
+<div class="sq sqbg3"><img src="http://www.zhcw.com/images/2014/video/tm.gif" usemap="#Map">
+  <map name="Map">
+    <area class="are1" shape="poly" coords="338,124,389,131,403,93,433,69,407,25,383,39,361,62,346,91" href="javascript:viod(0);">
+    <area class="are2" shape="poly" coords="509,66,531,24,508,13,473,8,437,12,411,23,437,66,474,61" href="javascript:viod(0);">
+    <area class="are3 dq" shape="poly" coords="516,69,538,30,560,47,579,71,593,98,600,125,559,132,540,98" href="javascript:viod(0);">
+  </map>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!--<script src="http://images.zhcw.com/2013/js/common/jquery-1.7.2.min.js"></script>-->
+<script>
+  function tab(l, c, n, jg) {
+    l = $(l);
+    switch (n) {
+      case 0:default:
+      l.hover(function() {qh($(this).index())});break;
+      case 1:
+        l.click(function() {qh($(this).index())});break;
+    }
+
+    function qh(i) {
+      var oo = i+1
+      l.removeClass(c).eq(i).addClass(c);
+      debugger
+      $('.sq').removeClass("sqbg1").removeClass("sqbg2").removeClass("sqbg3").addClass("sqbg"+oo);
+      t.removeClass(c).eq(i).addClass(c);
+    }
+
+  }
+
+
+    tab(".sq area",  "dq");
+</script>
+<!--
 <div style="position: relative;overflow: hidden">
-  <!--<div class="top-spots top-search-contain index0" data-target="map-wrap">-->
-  <!--<div class="clearfix">-->
-  <!--<h2><span>关注人群</span>迁移分布</h2>-->
-  <!--</div>-->
-  <!--</div>-->
+  &lt;!&ndash;<div class="top-spots top-search-contain index0" data-target="map-wrap">&ndash;&gt;
+  &lt;!&ndash;<div class="clearfix">&ndash;&gt;
+  &lt;!&ndash;<h2><span>关注人群</span>迁移分布</h2>&ndash;&gt;
+  &lt;!&ndash;</div>&ndash;&gt;
+  &lt;!&ndash;</div>&ndash;&gt;
   <div class="top-spots">
     <div class="clearfix">
       <h2><a href="##" class="active" data-button="swiper-button-prev">关注人群迁徙</a></h2>
@@ -18,10 +109,10 @@
       <h2 class=""><a href="##" data-button="swiper-button-next">敏感网站访问</a></h2>
     </div>
   </div>
-  <!--<div class="top-button">-->
-  <!--<a class="pull-left"> < </a>-->
-  <!--<a class="pull-right active"> > </a>-->
-  <!--</div>-->
+  &lt;!&ndash;<div class="top-button">&ndash;&gt;
+  &lt;!&ndash;<a class="pull-left"> < </a>&ndash;&gt;
+  &lt;!&ndash;<a class="pull-right active"> > </a>&ndash;&gt;
+  &lt;!&ndash;</div>&ndash;&gt;
   <div class="swiper-box" style="position: relative;">
     <div class="swiper-container swiper-container-horizontal">
       <div class="swiper-wrapper">
@@ -42,14 +133,14 @@
   </div>
 </div>
 
-<!--<script type="text/javascript" charset="utf-8" src="/assets/campus_security/ie9-classList.js"></script>-->
+&lt;!&ndash;<script type="text/javascript" charset="utf-8" src="/assets/campus_security/ie9-classList.js"></script>&ndash;&gt;
 <script src="http://api.map.baidu.com/api?v=2.0&ak=0D518594d504c02b9271272ddca83c41"></script>
 <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
-<!--<%= javascript_include_tag "echarts/echarts.js" %>-->
+&lt;!&ndash;<%= javascript_include_tag "echarts/echarts.js" %>&ndash;&gt;
 
 <script src="https://rawgit.com/ecomfe/echarts/master/dist/extension/bmap.js"></script>
-<!--<%= javascript_include_tag "echarts/extension/bmap.js" %>-->
-<!--<%= javascript_include_tag "swiper-3.4.1.jquery.min.js" %>-->
+&lt;!&ndash;<%= javascript_include_tag "echarts/extension/bmap.js" %>&ndash;&gt;
+&lt;!&ndash;<%= javascript_include_tag "swiper-3.4.1.jquery.min.js" %>&ndash;&gt;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1./js/swiper.jquery.min.js"></script>
 
 <script>
@@ -401,6 +492,7 @@
 
 
 </script>
+-->
 
 
 

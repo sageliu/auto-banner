@@ -1,5 +1,8 @@
 const state = {
-  imgUrl: {i: '/dist/bgImages/lp.png'},
+  imgUrl: {lp: '/dist/bgImages/lp.png',
+    // banner:'',
+    // twitter:''
+  },
   dragAbleBtnItems: [
     // {
     //   info:{

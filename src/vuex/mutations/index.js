@@ -1,7 +1,13 @@
 import state from '../state/index'
 const mutations={
-  changeImgUrl(state,imgUrlInputValue){
-    state.imgUrl={...state.imgUrl,i:imgUrlInputValue}
+  changeImgUrl(state,lpInputValue){
+    state.imgUrl={...state.imgUrl,lp:lpInputValue}
+  },
+  changeBannerImgUrl(state,bannerInputValue){
+    state.imgUrl={...state.imgUrl,banner:bannerInputValue}
+  },
+  changeTwitterImgUrl(state,twitterInputValue){
+    state.imgUrl={...state.imgUrl,twitter:twitterInputValue}
   },
   addDragAbleBtn(state , {component='DragAbleBtn', text='这是一个新增的按钮',thisWidth='10rem',thisHeight='2rem',thisBorderRadius='1rem',thisLeft='0',thisTop='0',selected='default',isShow=false,thisSid=''}) {
     state.dragAbleBtnItems.push({

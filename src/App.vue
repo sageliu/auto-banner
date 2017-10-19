@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <img :src="imgUrl.i">
+      <img :src="imgUrl.lp">
     </div>
     <ImgInfo></ImgInfo>
     <AddBtn id="addBtn" isAddBtn="AddBtn" contentText="+" method="addDragAbleBtn"></AddBtn>

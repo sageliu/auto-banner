@@ -1,79 +1,130 @@
 <template>
-    <div key="1">
-      <form id="imgInfoWrap" v-show="isShow">
-          <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
-            <input class="fileWrap" type="file" name="lp" @change="imgUrl"  enctype="multipart/form-data" ref="inputFile">
-            <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
-          </AddBtn>
-        <label for="ImgUrl" class="submitFileLabel">
+  <div key="lp">
+    <form id="imgInfoWrap" v-show="isShow">
+      <div>
+        <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
+          <input class="fileWrap" type="file" name="lp" @change="lpUrl" enctype="multipart/form-data" ref="inputFileLp">
+          <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
+        </AddBtn>
+        <label for="lp" class="submitFileLabel">
           点此上传LP背景图
         </label>
-        <div @click="changeShow" class="closeBtn">&times;</div>
-        <button type="button" @click="submitImgInfo" :disabled="isDisAbled" class="submitFileBtn">上传</button>
-      </form>
-      <div id="triangle" @click="changeShow" v-show="!isShow"></div>
-    </div>
+      </div>
+      <div>
+        <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
+          <input class="fileWrap" type="file" name="banner" @change="bannerUrl" enctype="multipart/form-data"
+                 ref="inputFileBanner">
+          <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
+        </AddBtn>
+        <label for="banner" class="submitFileLabel">
+          点此上传Banner图
+        </label>
+      </div>
+      <div>
+        <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
+          <input class="fileWrap" type="file" name="twitter" @change="twitterUrl" enctype="multipart/form-data"
+                 ref="inputFileTwitter">
+          <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
+        </AddBtn>
+        <label for="twitter" class="submitFileLabel">
+          点此上传twitter图
+        </label>
+      </div>
+
+      <div @click="changeShow" class="closeBtn">&times;</div>
+      <button type="button" @click="submitImgInfo" :disabled="isDisAbled" class="submitFileBtn">上传</button>
+    </form>
+    <div id="triangle" @click="changeShow" v-show="!isShow"></div>
+  </div>
 </template>
 
 <script>
   import AddBtn from '../AddBtn/AddBtn.vue'
   import axios from 'axios'
   import store from '../../vuex/store'
-  import {mapMutations,mapActions} from 'vuex'
-//  import DragAbleBtn from '../DragAbleBtn/DragAbleBtn.vue'
+  import {mapMutations, mapActions} from 'vuex'
+  //  import DragAbleBtn from '../DragAbleBtn/DragAbleBtn.vue'
   export default {
-    store,
-    data(){
+    data() {
       return {
-        isShow:false,
-        submitImgInfoUrl:url+'/submitImgInfo',
-        isDisAbled:true,
-        items:[]
+        isShow: false,
+        submitImgLpInfoUrl: url + '/submitLpImgInfo',
+        submitImgBannerInfoUrl: url + '/submitBannerImgInfo',
+        submitImgTwitterInfoUrl: url + '/submitTwitterImgInfo',
+        isDisAbled: true,
+        items: []
       }
     },
-    methods:{
+    methods: {
 //      ...mapMutations({
 //        changeImgUrl1:'changeImgUrl'
 //      }),
-      imgUrl(){
-        this.isDisAbled=false;
+      lpUrl() {
+        this.isDisAbled = false;
 //        this.isDisAbled===true?(void 0):!this.isDisAbled;
-        store.commit('changeImgUrl',URL.createObjectURL(this.$refs.inputFile.files[0]))
-      },
-//      ...mapActions(['changeImgUrl']),
-      submitImgInfo(){
+        this.$store.commit('changeImgUrl', URL.createObjectURL(this.$refs.inputFileLp.files[0]));
         let formData = new FormData();
-        formData.append('lp', this.$refs.inputFile.files[0]);
-//        if(formData.imgUrl===undefined)return;
-        axios.post(this.submitImgInfoUrl,formData).then(data=>{
-          console.log('--------'+data.data+'--------');
-          this.changeShow();
-        }).catch(err=>{
+        formData.append('lp', this.$refs.inputFileLp.files[0]);
+        axios.post(this.submitImgLpInfoUrl, formData).then(data => {
+          console.log('--------' + data.data + '--------');
+        }).catch(err => {
           console.log(err);
         })
       },
-      changeShow(){
-        this.isShow=!this.isShow
+      bannerUrl() {
+        this.isDisAbled = false;
+//        this.isDisAbled===true?(void 0):!this.isDisAbled;
+        this.$store.commit('changeBannerImgUrl', URL.createObjectURL(this.$refs.inputFileBanner.files[0]))
+        let formData = new FormData();
+        formData.append('banner', this.$refs.inputFileBanner.files[0]);
+        axios.post(this.submitImgBannerInfoUrl, formData).then(data => {
+          console.log('--------' + data.data + '--------');
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      twitterUrl() {
+        this.isDisAbled = false;
+//        this.isDisAbled===true?(void 0):!this.isDisAbled;
+        this.$store.commit('changeTwitterImgUrl', URL.createObjectURL(this.$refs.inputFileTwitter.files[0]))
+        let formData = new FormData();
+        formData.append('twitter', this.$refs.inputFileTwitter.files[0]);
+        axios.post(this.submitImgTwitterInfoUrl, formData).then(data => {
+          console.log('--------' + data.data + '--------');
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+//      ...mapActions(['changeImgUrl']),
+      submitImgInfo() {
+        this.changeShow();
+      },
+      changeShow() {
+        this.isShow = !this.isShow
       },
     },
-    components:{
+    components: {
       AddBtn,
 //      DragAbleBtn
     }
   }
 </script>
 <style scoped lang="scss">
-  #imgInfoWrap{
+  #imgInfoWrap {
     position: fixed;
     left: 0;
     right: 0;
     padding: 1rem;
-    background: rgba(0,0,0,.7);
-    color:lawngreen;
+    background: rgba(0, 0, 0, .7);
+    color: lawngreen;
     z-index: 9;
-
+    &>div {
+      height: 2rem;
+      margin-bottom: 2rem;
+    }
   }
-  .closeBtn{
+
+  .closeBtn {
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -86,15 +137,17 @@
     border: 2px solid;
     border-radius: 50%;
   }
-  .submitFileLabel{
-    margin-bottom: 2rem;
+
+  .submitFileLabel {
+    /*margin-bottom: 2rem;*/
     display: block;
     line-height: 3rem;
     position: relative;
     left: 1rem;
     float: left;
   }
-  #triangle{
+
+  #triangle {
     border-top: 2rem solid lime;
     border-left: 1.2rem solid transparent;
     border-right: 1.2rem solid transparent;
@@ -105,7 +158,8 @@
     top: 0;
     z-index: 9;
   }
-  .submitFileBtn:disabled{
+
+  .submitFileBtn:disabled {
     background: #ccc;
     border: none;
     color: #fff;

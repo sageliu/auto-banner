@@ -23,17 +23,40 @@ app.all('*', function (req, res, next) {
     next();
   }
 });
-app.post('/submitImgInfo', upload.single('lp'), function (req, res) {//上传图片的逻辑，用到了multer,
+app.post('/submitLpImgInfo', upload.single('lp'), function (req, res) {//上传图片的逻辑，用到了multer,
   if (req.file) {
     //如果上传成功，跳到首页
     console.log(req.file);
     // res.redirect('/')
-    res.end('------上传背景图完成------');
+    res.end('------上传lp背景图完成------');
   } else {
     res.end('------upload error------');
     console.log('------upload error------');
   }
-})
+});
+app.post('/submitBannerImgInfo', upload.single('banner'), function (req, res) {//上传图片的逻辑，用到了multer,
+  if (req.file) {
+    //如果上传成功，跳到首页
+    console.log(req.file);
+    // res.redirect('/')
+    res.end('------上传banner图完成------');
+  } else {
+    res.end('------upload error------');
+    console.log('------upload error------');
+  }
+});
+app.post('/submitTwitterImgInfo', upload.single('twitter'), function (req, res) {//上传图片的逻辑，用到了multer,
+  if (req.file) {
+    //如果上传成功，跳到首页
+    console.log(req.file);
+    // res.redirect('/')
+    res.end('------上传twitter图完成------');
+  } else {
+    res.end('------upload error------');
+    console.log('------upload error------');
+  }
+});
+
 app.get('/getState', function (req, res) {
   let stateJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
   // console.log(typeof stateJson);//string
