@@ -5,6 +5,10 @@ const actions={
   },
   addDragAbleBtn({commit}){
     commit('addDragAbleBtn');
+  },
+  resetState({commit},it){
+    console.log('actions');
+    commit('resetState',it);
   }
 }
 export default actions;

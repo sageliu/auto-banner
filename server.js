@@ -1,10 +1,11 @@
-var port = 9001;
-var express = require('express');
-var fs = require('fs');
-var path = require('path')
-var bodyParser = require('body-parser');
+let port = 9001;
+let express = require('express');
+let fs = require('fs');
+let path = require('path')
+let bodyParser = require('body-parser');
 // 创建 application/x-www-form-urlencoded 编码解析
 let upload = require('./util/multerUtil')
+// let stateJson=require('./dist/data/req.txt')
 //multer有single()中的名称必须是表单上传字段的name名称。
 let app = express();
 app.use(bodyParser.json());
@@ -33,7 +34,7 @@ app.post('/submitImgInfo', upload.single('ImgUrl'), function (req, res) {
   })
 app.get('/getState',function (req,res) {
   let stateJson=fs.readFileSync(path.join(__dirname,'./dist/data/req.txt')).toString();
-  console.log(typeof stateJson);
+  // console.log(typeof stateJson);//string
   res.send(stateJson);
 })
 app.post('/postState',function (req,res) {
@@ -45,16 +46,16 @@ app.post('/postState',function (req,res) {
 })
 app.post('/postData', function (req, res) {//拖拽后的文件的位置信息
 
-  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
-  var oldJson = JSON.parse(oldjInfoJson)
+  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString();
+  let oldJson = JSON.parse(oldjInfoJson)
 
-  var oldInputInfoJson = {
+  let oldInputInfoJson = {
     sid: oldJson.sid,
     urlLp: oldJson.urlLp,
     urlTp: oldJson.urlTp,
     title: oldJson.title
   }
-  var newInfoJson = Object.assign(req.body, oldInputInfoJson)//为了处理覆盖的问题
+  let newInfoJson = Object.assign(req.body, oldInputInfoJson)//为了处理覆盖的问题
   fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
@@ -64,10 +65,10 @@ app.post('/postData', function (req, res) {//拖拽后的文件的位置信息
   res.send('最新位置已保存');
 })
 app.post('/setInfo', function (req, res) {//设置页面的内容信息
-  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
+  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   // console.log(JSON.parse(oldjInfoJson));
   // console.log(req.body);
-  var newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
+  let newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
   fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
@@ -77,10 +78,10 @@ app.post('/setInfo', function (req, res) {//设置页面的内容信息
   res.send('info1️已保存');
 })
 app.post('/postBtnInfo', function (req, res) {//设置btn的宽高信息
-  var oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
+  let oldjInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   // console.log(JSON.parse(oldjInfoJson));
   // console.log(req.body);
-  var newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
+  let newInfoJson = Object.assign(JSON.parse(oldjInfoJson), req.body)
   fs.writeFile(path.join(__dirname, './dist/data/req.txt'), JSON.stringify(newInfoJson), function (err) {
     if (err) {
       return console.error(err);
@@ -90,10 +91,10 @@ app.post('/postBtnInfo', function (req, res) {//设置btn的宽高信息
   res.send('submit ok')
 })
 app.get('/output', function (req, res) {//输出新的html 文件
-  var oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
-  var oInfo = JSON.parse(oldInfoJson);
+  let oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
+  let oInfo = JSON.parse(oldInfoJson);
   console.log(oInfo);
-  var sHtml = '<html><head>\n' +
+  let sHtml = '<html><head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
     '  <!---->\n' +
@@ -268,9 +269,9 @@ app.get('/output', function (req, res) {//输出新的html 文件
   res.send('ok')
 })
 
-var server = app.listen(port, function () {
-  var host = server.address().address
-  var port = server.address().port
+let server = app.listen(port, function () {
+  let host = server.address().address
+  let port = server.address().port
 
   console.log("应用实例，访问地址为 http://%s:%s", host, port)
 });

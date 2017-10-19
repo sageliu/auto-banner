@@ -24,13 +24,15 @@
       methodRun(){
         if(typeof this.method ==='function'){
           this.method()
-        }else{
+        }else if(typeof this[this.method] ==='function'){
           this[this.method]()
+        }else{
+          return false;
         }
       },
       addDragAbleBtn(){
         if(this.isAddBtn==='AddBtn'){
-          console.log(this.isAddBtn);
+          console.log('------成功添加了一个新的按钮，请记得修改按钮的对应属性------')
           this.$store.commit('addDragAbleBtn',{
             component: 'DragAbleBtn',
             text: '这是一个新增的按钮',

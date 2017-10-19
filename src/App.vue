@@ -22,7 +22,7 @@
   import AddBtn from './components/AddBtn/AddBtn.vue'
   import PageInfo from './components/PageInfo/PageInfo.vue'
   import store from './vuex/store'
-  import {mapState,mapGetters} from 'vuex'
+  import {mapState,mapGetters,mapActions} from 'vuex'
   import axios from 'axios'
   export default {
     store,
@@ -38,7 +38,7 @@
       //获取回来数据
       axios.get('http://127.0.0.1:9001/getState')
         .then(data => {
-//          console.log(data.data.imgUrl);
+//          this.resetState(data.data);
           this.$store.commit('resetState', data.data)//修改state
           console.log('------成功加载页面数据为上次数据------')
         })
@@ -47,15 +47,16 @@
         })
     },
     methods: {
+//      ...mapActions(['resetState']),
       pageInfoChangeShow() {
-        console.log(1);
         this.pageInfoShow = !this.pageInfoShow;
       },
       outPutHtml() {
         let stateJson = this.$store.getters.getState;//getters获得的数据就是json了。不要再进行JSON.stringify转换成json格式
         axios.post('http://127.0.0.1:9001/postState', stateJson)
           .then(data => {
-            console.log(data);
+//            console.log(data);
+            console.log('------成功保存页面数据------')
           })
           .catch(err => {
             console.log(err);

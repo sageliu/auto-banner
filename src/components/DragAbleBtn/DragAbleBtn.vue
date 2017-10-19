@@ -70,7 +70,9 @@
           thisWidth:w
         }
 //        console.log('it',this.it);
-        console.log('item',this.item);
+//        console.log('item',this.item);
+        console.log('------调整按钮位置结束------')
+
         this.$store.commit('changeDragAbleBtnInfo',{item:this.item,it:this.it})
         target.removeEventListener('touchmove', this.dragMove);
         target.removeEventListener('touchend', this.dragEnd);

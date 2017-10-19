@@ -14,7 +14,6 @@
         页面的urlLp:
       </label>
       <input class="editInput" type="text" name="" v-model="pageInfo.thisUrlLp" placeholder="请输入urlLp">
-
       <!--<label for="" class="submitFileLabel">-->
         <!--按钮功能选择:-->
       <!--</label>-->
@@ -46,10 +45,25 @@
       }
     },
     beforeMount(){
-      this.pageInfo={...this.pageInfo,...this.$store.getters.getPageInfo}
+      let _this=this
+//      console.log('----------------',...this.getPageInfo);
+      setTimeout(function () {
+        let obj=_this.$store.getters.getPageInfo
+        _this.pageInfo={..._this.pageInfo,...obj}
+      })
+
+
     },
     computed:{
       ...mapGetters(['getPageInfo'])
+    },
+    watch:{
+      pageInfo:{
+        handler(){
+          //this.pageInfo={...this.pageInfo,...this.getPageInfo}
+        },
+        deep:true
+      }
     },
     methods:{
       methodRun(){
@@ -58,6 +72,7 @@
 
       submitPageInfo(){
         this.$store.commit('submitPageInfo',this.pageInfo);
+        console.log('------成功临时保存页面数据------')
         this.method();
       }
     }

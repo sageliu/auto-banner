@@ -26,7 +26,9 @@ const mutations={
       // debugger
       return it.key!==item.key
     })
-    console.log('remove',dragAbleBtnItems);
+    // console.log('remove',dragAbleBtnItems);
+    console.log('------成功删除了一个按钮，请记得将数据输出------')
+
     state.dragAbleBtnItems=[...dragAbleBtnItems];
   },
   changeShow(state,item){
@@ -52,23 +54,31 @@ const mutations={
         newIt[k]=it[k]
       }
     }
-    console.log('newIt--------',newIt);
+    // console.log('newIt--------',newIt);
+
     state.dragAbleBtnItems.map((items,index)=> {
       if(items.key===item.key) {
-        console.log(index);
+        // console.log(index);//这是第几个按钮
         let ary={...items.info,...newIt};
         state.dragAbleBtnItems[index].info={...items.info,...ary}
       }
     })
+    console.log('------成功临时保存按钮的数据，请记得将数据最终提交------')
+
   },
   submitPageInfo(state,item){
     state.pageInfo={...state.pageInfo,...item}
   },
   resetState(state,item){
-    console.log(state);
-
-    state={...state,...item};
-    console.log(state);
-  }
+    // console.log(item);
+    // state={...state,...item};
+    state.pageInfo={...state.pageInfo,...item.pageInfo};
+    state.dragAbleBtnItems=[...state.dragAbleBtnItems,...item.dragAbleBtnItems];
+    // state.imgUrl={...state.imgUrl,...item.imgUrl}
+    // console.log(state);
+  },
+  getPageInfo(state){
+    return state.pageInfo;
+  },
 }
 export default mutations;

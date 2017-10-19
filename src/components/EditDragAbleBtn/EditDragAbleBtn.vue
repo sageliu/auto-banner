@@ -70,7 +70,7 @@
     watch: {
       item:{
         handler(oldValue,newValue){
-          console.log(1);
+          console.log('------按钮位置发生变化，请记得输出------')
           this.addOrMoveEndChangeData()
         },
         deep:true
@@ -85,7 +85,8 @@
     methods:{
       submitDragAbleInfo(){
         let formData= new FormData();
-        console.log(this.thisState);
+//        console.log(this.thisState);
+
 //        formData.append('thisHeight')
         this.$store.commit('submitDragAbleInfo',{item:this.item,it:this.thisState});
 
@@ -99,7 +100,7 @@
         let obj={};
         for(let p in this.item.info){
           if(p==='thisSid'){
-            continue;
+            obj[p]= this.item.info[p]//sid就是一个数字，没有单位
           }else{
             obj[p]= remToPx(this.item.info[p])
           }

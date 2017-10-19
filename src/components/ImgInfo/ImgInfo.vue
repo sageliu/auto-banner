@@ -1,7 +1,7 @@
 <template>
     <div key="1">
       <form id="imgInfoWrap" v-show="isShow">
-          <AddBtn isAddBtn="notAddBtn" contentText="+">
+          <AddBtn isAddBtn="notAddBtn" contentText="+" method="">
             <input class="fileWrap" type="file" name="ImgUrl" @change="imgUrl"  enctype="multipart/form-data" ref="inputFile">
             <!--<input class="fileWrap" type="file" name="ImgUrl" @change="changeImgUrl" enctype="multipart/form-data" ref="inputFile">-->
           </AddBtn>
