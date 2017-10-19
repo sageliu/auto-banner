@@ -10,6 +10,7 @@ let upload = require('./util/multerUtil')
 let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/dist', express.static(__dirname + '/dist/bgImages'));//访问html 的时候。172.16.1.20:9001/dist/lp.html   会访问dist/bgImages/lp.html
 app.all('*', function (req, res, next) {
   res.header('charset', 'utf8');
   res.header('Access-Control-Allow-Origin', '*');
@@ -49,27 +50,28 @@ app.get('/output', function (req, res) {//输出新的html 文件
   let oldInfoJson = fs.readFileSync(path.join(__dirname, './dist/data/req.txt')).toString()
   let oInfo = JSON.parse(oldInfoJson);
   console.log(oInfo);
-  let sHtml = '<html><head>\n' +
+  let imgName=oInfo.imgUrl.i.split('/')[3];
+  let html1 = '<html><head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
     '  <!---->\n' +
     '  <meta name="twitter:card" content="summary_large_image">\n' +
     '  <meta name="twitter:site" content="@stager">\n' +
     '  <meta name="twitter:title" content="Stager Live Stager News">\n' +
-    '  <meta name="twitter:image" class="urlTp" content="' + oInfo.urlTp + '">\n' +
+    '  <meta name="twitter:image" class="urlTp" content="' + oInfo.pageInfo.thisUrlTp + '">\n' +
     '  <meta name="twitter:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
-    '  <meta property="og:url" class="urlLp" content="' + oInfo.urlLp + '">\n' +
+    '  <meta property="og:url" class="urlLp" content="' + oInfo.pageInfo.thisUrlLp + '">\n' +
     '  <meta property="og:title" content="Stager Live Stager News">\n' +
     '  <meta property="og:type" content="article">\n' +
     '  <meta property="og:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
-    '  <meta property="og:image" class="urlTp" content="' + oInfo.urlTp + '">\n' +
+    '  <meta property="og:image" class="urlTp" content="' + oInfo.pageInfo.thisUrlTp + '">\n' +
     '  <!---->\n' +
     '  <meta name="description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">\n' +
     '  <meta name="keywords" content="stager,live,hot live">\n' +
     '  <meta property="fb:app_id" content="523144861213633">\n' +
     '  <meta property="og:width" content="800">\n' +
     '  <meta property="og:height" content="414">\n' +
-    '  <title>' + oInfo.title + '</title>\n' +
+    '  <title>' + oInfo.pageInfo.thisTitle + '</title>\n' +
     '  <link rel="shortcut icon" href="favicon.png">\n' +
     '  <script>\n' +
     'console.warn(\'将根据已有的meta标签来设置缩放比例\');\n' +
@@ -125,17 +127,13 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '    #lp {\n' +
     '      width: 20rem;\n' +
     '    }\n' +
-    '    #btn {\n' +
+    '    .btn {\n' +
     '      position: absolute;\n' +
-    '      line-height: ' + oInfo.btnHeight + ';\n' +
-    '      height: ' + oInfo.btnHeight + ';\n' +
-    '      width: ' + oInfo.btnWidth + ';\n' +
-    '      text-align: center;\n' +
     '    }\n' +
     '  </style>\n' +
     '</head>\n' +
     '<body style="">\n' +
-    '<img src="../../dist/images/lp.jpeg" alt="" id="lp">\n' +
+    '<img src="./'+imgName+'" alt="" id="lp">\n' +
     '<script>\n' +
     '  function ajax({url, type = \'GET\', isAsync = true,isJson=false, callback,data=null}) {\n' +
     '    if (typeof callback !== \'function\' || !window.XMLHttpRequest) return;\n' +
@@ -155,8 +153,9 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '    console.log(data);\n' +
     '    xhr.send(data)\n' +
     '  }\n' +
-    '</script>\n' +
-    '<script>\n' +
+    '</script>\n';
+
+    let html3='<script>\n' +
     '  var u = navigator.userAgent;\n' +
     '  var isIOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端\n' +
     '  var isAndroid = u.indexOf(\'Android\') > -1 || u.indexOf(\'Adr\') > -1; //android\n' +
@@ -212,10 +211,16 @@ app.get('/output', function (req, res) {//输出新的html 文件
     '      }\n' +
     '    }\n' +
     '  };\n' +
-    '</script>\n' +
-    '<div id="btn" sid="' + oInfo.sid + '" style="bottom: inherit; left: ' + oInfo.left + '; top: ' + oInfo.top + '"></div></body></html>';
-  // '<div id="btn" sid="'+oInfo.sid+'" style="bottom: inherit; left: '+oInfo.left+'; top: '+oInfo.top+'">'+oInfo.buttonShow+'</div></body></html>'
-  fs.writeFile(path.join(__dirname, './dist/views/lp.html'), sHtml, function (err) {
+      'function fn(e) { console.log(e.target) }' +
+    '</script></body></html>';
+    let html2=''
+    oInfo.dragAbleBtnItems.map(item=>{
+      // console.log(item.info);
+      html2+= '<div class="btn" sid="' + item.info.thisSid + '" style="bottom: inherit; left: ' + item.info.thisLeft + '; top: ' + item.info.thisTop + '; width:'+item.info.thisWidth+';height: '+item.info.thisHeight+';border-radius:'+item.info.thisBorderRadius + ';"onclick="fn"></div>'
+
+    })
+
+  fs.writeFile(path.join(__dirname, './dist/bgImages/lp.html'), html1+html2+html3, function (err) {
     if (err) {
       return console.error(err);
     }

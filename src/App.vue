@@ -57,7 +57,12 @@
           .then(data => {
 //            console.log(data);
             console.log('------成功保存页面数据------')
+          }).then(data=>{
+          axios.get(url+'/output', stateJson)
+            .then(data=>{
+            console.log(data);
           })
+        })
           .catch(err => {
             console.log(err);
           })
