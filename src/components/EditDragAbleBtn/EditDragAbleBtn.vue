@@ -32,6 +32,8 @@
         <option value="open">打开个人中心</option>
         <option value="twitter">跳转到twitter</option>
         <option value="line">跳转到line</option>
+        <option value="vedio">跳转视频播放页</option>
+        <option value="mail">跳转邮箱</option>
       </select>
         <label for="" v-show="thisState.selected==='open'" class="submitFileLabel">
           按钮SID:
@@ -79,7 +81,7 @@
         handler(newValue,oldValue){
           if(newValue!=='open'){
             this.thisState.thisSid='';
-            console.log(this.thisState);
+//            console.log(this.thisState);
           }
         }
       }
