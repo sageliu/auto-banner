@@ -15,7 +15,6 @@ let storage = multer.diskStorage({
   }
 });
 
-
 //添加配置文件到muler对象。
 let upload = multer({
   storage:storage

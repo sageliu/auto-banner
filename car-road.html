@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>车道效果</title>
+  <style>
+    html,body,ul,li,div{
+      margin: 0;
+      padding: 0;
+    }
+    ul,li{
+      list-style: none;
+    }
+    ul{
+      width: 800px;
+      height: 60px;
+      outline: 1px solid red;
+      position: relative;
+      padding-top: 30px;
+    }
+    ul:after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+    li{
+      float: left;
+      width: 200px;
+      height: 30px;
+      outline: 1px solid greenyellow;
+      background: #ccd;
+      color: green;
+    }
+
+    li:nth-child(1){
+      top: 30px;
+    }
+    li:nth-child(2){
+      margin-left: 200px;
+    }
+    .road.active li:nth-child(2){
+      margin-left:0;
+      transition: all 1.5s;
+    }
+
+    .road.active ul{
+      /*left: -200px;*/
+      /*padding: 0;*/
+      /*transition: all 1.5s;*/
+    }
+    .road.active li:nth-child(1){
+      position: absolute;
+      top:0;
+      opacity: 0;
+      transition: all 1.5s;
+    }
+    .road{
+      width: 200px;
+      height: 60px;
+      margin: 30px auto ;
+      transition:all 3s;
+      position: relative;
+      outline: 1px solid blue;
+      overflow: hidden;
+    }
+
+  </style>
+</head>
+<body>
+<div class="road">
+  <ul class="carWrap">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+</div>
+
+<script>
+  let roadDiv=document.getElementsByClassName('road')[0];
+  let carWrapUl=roadDiv.getElementsByTagName('ul')[0];
+  function addActive() {
+    roadDiv.className+=' active';
+    setTimeout(function () {
+      carWrapUl.removeChild(carWrapUl.children[0]);
+      roadDiv.classList.remove('active');
+    },1500)
+    setTimeout(function () {
+        removeActive(addActive)
+    },3000)
+  }
+
+  function removeActive(callback) {
+    let flag=carWrapUl.getElementsByTagName('li');
+    console.log(flag.length);
+    if (flag.length>0){
+    callback();
+    }
+  }
+  setTimeout(function () {
+    addActive();
+  },1000)
+
+
+
+</script>
+</body>
+</html>
