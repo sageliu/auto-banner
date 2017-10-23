@@ -60,7 +60,7 @@
           }).then(data=>{
           axios.get(url+'/output', stateJson)
             .then(data=>{
-            console.log('------可通过'+url+'/dist/lp.html访问新生成的页面------');
+            console.log('------可通过'+url+'/dist/output/lp.html访问新生成的页面------');
             window.open(url+'/dist/lp.html');
           })
         })

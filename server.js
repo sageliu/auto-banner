@@ -10,7 +10,7 @@ let upload = require('./util/multerUtil')
 let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/dist', express.static(__dirname + '/dist/bgImages'));//访问html 的时候。172.16.1.20:9001/dist/lp.html   会访问dist/bgImages/lp.html
+app.use('/dist', express.static(__dirname + '/dist'));//访问html 的时候。172.16.1.20:9001/dist/output/lp.html   会访问dist/output/lp.html
 app.all('*', function (req, res, next) {
   res.header('charset', 'utf8');
   res.header('Access-Control-Allow-Origin', '*');
@@ -358,7 +358,7 @@ app.get('/output', function (req, res) {//输出新的html 文件
     }
     html2 += '<div class="btn" data-sid="' + item.info.thisSid + '" style="bottom: inherit; left: ' + item.info.thisLeft + '; top: ' + item.info.thisTop + '; width:' + item.info.thisWidth + ';height: ' + item.info.thisHeight + ';border-radius:' + item.info.thisBorderRadius + '; " ontouchend="'+method+'"></div>'
   })
-  fs.writeFile(path.join(__dirname, './dist/bgImages/lp.html'), html1 + html2 + html3, function (err) {
+  fs.writeFile(path.join(__dirname, './dist/output/lp.html'), html1 + html2 + html3, function (err) {
     if (err) {
       return console.error(err);
     }

@@ -1,0 +1,241 @@
+<html><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!---->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@stager">
+  <meta name="twitter:title" content="Stager Live Stager News">
+  <meta name="twitter:image" class="urlTp" content="123">
+  <meta name="twitter:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">
+  <meta property="og:url" class="urlLp" content="456">
+  <meta property="og:title" content="Stager Live Stager News">
+  <meta property="og:type" content="article">
+  <meta property="og:description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">
+  <meta property="og:image" class="urlTp" content="123">
+  <!---->
+  <meta name="description" content="いつもStagerLIveの公式配信を楽しんで見ていただき、誠にありがとうございます。">
+  <meta name="keywords" content="stager,live,hot live">
+  <meta property="fb:app_id" content="523144861213633">
+  <meta property="og:width" content="800">
+  <meta property="og:height" content="414">
+  <title>智能banner系统</title>
+  <link rel="shortcut icon" href="favicon.png">
+  <script>
+console.warn("将根据已有的meta标签来设置缩放比例");
+        window.fbAsyncInit = function(){
+          FB.init({
+            appId: '523144861213633',
+            xfbml: true,
+            version: 'v2.8'
+          });
+          (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if(d.getElementById(id)) {
+              return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        }
+
+        function setRemFontSize(baseSize, baseWidth) {
+          var baseSize = baseSize || 20,
+            baseWidth = baseWidth || 375,
+            clientWidth = document.documentElement.clientWidth;
+          if(clientWidth < 320) {
+            clientWidth = 320;
+          }
+          if(clientWidth > 750) {
+            clientWidth = 750;
+          }
+          document.getElementsByTagName('html')[0].style.fontSize = clientWidth / baseSize + 'px'
+        }
+        setRemFontSize();
+        window.addEventListener("resize", function () {
+          setTimeout(function () {
+            setRemFontSize();
+          }, 200)
+        });
+  </script>
+  <style>
+    body {
+      position: relative;
+      width: 100%;
+    }
+    html, body, img, div {
+      margin: 0;
+      padding: 0;
+    }
+    *:focus{
+      outline: none;
+    }
+    #lp {
+      width: 20rem;
+    }
+    .btn {
+      border: 3px solid #fff;
+      position: absolute;
+      z-index: 90;
+    }
+  </style>
+</head>
+<body style="">
+<img src="./lp.png" alt="" id="lp">
+<div class="btn" data-sid="20000" style="bottom: inherit; left: 4.5772946859903385rem; top: 19.995942028985507rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="goAppHome(userId)"></div><div class="btn" data-sid="" style="bottom: inherit; left: 4.629661835748792rem; top: 5.150966183574879rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="goTwitter()"></div><div class="btn" data-sid="" style="bottom: inherit; left: 4.528985507246377rem; top: 8.723864734299518rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="goLine()"></div><div class="btn" data-sid="" style="bottom: inherit; left: 4.679951690821256rem; top: 13.202463768115942rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="goAppHome(userId)"></div><div class="btn" data-sid="" style="bottom: inherit; left: 4.679951690821256rem; top: 16.372753623188405rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="goEmail()"></div><div class="btn" data-sid="" style="bottom: inherit; left: 4.528985507246377rem; top: 22.964975845410628rem; width:10rem;height: 2rem;border-radius:1rem; " ontouchend="fn()"></div><script>  var u = navigator.userAgent;
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); /*ios终端*/
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; /*android*/
+ // var nowTimeApp;
+function fn() { alert("未绑定事件") };
+let obj={sid:0};
+Array.prototype.map.call(document.getElementsByClassName("btn"),item=>{
+obj.sid=item.getAttribute("data-sid").length>0?item.getAttribute("data-sid"):obj.sid;
+});
+let userId=obj.sid;
+let nowTimeApp = new Date().getTime();
+</script><script>
+  function ajax({url, type = 'GET', isAsync = true,isJson=false, success,data=null}) {
+    if (typeof success !== 'function' || !window.XMLHttpRequest) return;
+    var xhr = new XMLHttpRequest()
+    xhr.open(type, url, isAsync)
+//    xhr.withCredentials = true
+    if(isJson){
+      xhr.setRequestHeader("Content-type", "application/json");
+    }
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+          success(xhr.responseText)
+        }
+      }
+    }
+    console.log(data);
+    xhr.send(data)
+  };
+function goAppHome(userId){
+	var u = navigator.userAgent;
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android
+  var nowTimeApp = new Date().getTime();
+  if(isIOS) {
+    try {
+      window.webkit.messageHandlers.stagerGotoHomePage.postMessage({
+        targetUserId: userId
+      });
+    } catch(e) {
+     	goIosHomeErr(userId,nowTimeApp)
+    }
+  } else if(isAndroid) {
+    try {
+      AndroidEvent.GotoHomePage(userId);
+    } catch(e) {
+      goAdrErr(userId,nowTimeApp)
+    }
+  }
+
+};
+function goLine(){
+  var u = navigator.userAgent;
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android
+  var nowTimeApp;
+    if(isIOS) {
+      try{
+         window.webkit.messageHandlers.stagerGotoLineAt.postMessage();
+      }           
+      catch(e) {
+        console.log(e)
+      }
+    } else if(isAndroid) {
+      try {
+        window.location.href="https://line.me/R/ti/p/%40stagerlive"
+      } catch(e) {
+        console.log(e)
+      }
+    }
+};
+function goEmail(name,url){
+  var oBtn=document.querySelector(name);
+  oBtn.oncilck=function(){
+    window.webkit.messageHandlers.stagerFeedback.postMessage({
+      "type": "2",
+      "url": url
+    });
+  }
+    
+};
+function goAppHome(userId){
+var u = navigator.userAgent;
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android
+  if(isIOS) {
+    try {
+      window.webkit.messageHandlers.stagerGotoHomePage.postMessage({
+        targetUserId: userId
+      });
+    } catch(e) {
+     	goIosVideoErr(userId,nowTimeApp)
+    }
+  } else if(isAndroid) {
+    try {
+      AndroidEvent.GotoHomePage(userId);
+    } catch(e) {
+      goAdrErr(userId,nowTimeApp)
+    }
+  }
+
+};
+function goIosHomeErr(userId,nowTimeApp){
+window.location.href = "com.xhh.stagerlive.openfromWeb://homepageuserid=" + userId + "&token=i" + nowTimeApp; //ios app协议
+ setTimeout(function () {
+   $.ajax({
+     type: "get",
+     url: "http://ip.stagerlive.jp:8085/api/v1/h5?gettoken=i" + nowTimeApp,
+     success: function (data) {
+       var ip = JSON.parse(data)['ip'];
+       if(!ip) { //下载app
+         window.location.href = 'https://app.adjust.com/b2elxd';
+       } else { //在app打开
+         console.log("stagerLive");
+       }
+     }
+   });
+ }, 2000);
+};
+function goIosVideoErr(userId,nowTimeApp){//ios跳转视频页失败执行
+    window.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=i" + nowTimeApp; //ios app协议
+    setTimeout(function () {
+      ajax({
+        type: "get",
+        url: "http://ip.stagerlive.jp:8085/api/v1/h5?gettoken=i" + nowTimeApp,
+        success: function (data) {
+          var ip = JSON.parse(data)["ip"];
+          if(!ip) { //下载app
+            window.location.href = 'https://app.adjust.com/b2elxd';
+          } else { //在app打开
+            console.log("stagerLive");
+          }
+        }
+      });
+    }, 2000);
+  }
+function goAdrErr(userId,nowTimeApp){
+	window.location.href = "com.stager.stager://data/sun/userId=" + userId + "&token=a" + nowTimeApp; //Android app协议
+  setTimeout(function () {
+    $.ajax({
+      type: "get",
+      url: "http://ip.stagerlive.jp:8085/api/v1/h5?gettoken=a" + nowTimeApp,
+      success: function (data) {
+        var ip = JSON.parse(data)['ip'];
+        if(!ip) { // 手机没app
+          window.location.href = 'https://app.adjust.com/w3yjwl';
+        } else { // 手机 有app
+          console.log("stagerLive");
+        }
+      }
+    });
+  }, 3000);
+};
+</script>
+</body></html>

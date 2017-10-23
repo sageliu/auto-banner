@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>智能banner系统</title>
+    <style>
+      body {
+        position: relative;
+        width: 100%;
+      }
+
+      html, body, img, div {
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+    <script>
+      console.warn('将根据已有的meta标签来设置缩放比例');
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '523144861213633',
+          xfbml: true,
+          version: 'v2.8'
+        });
+        (function (d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if(d.getElementById(id)) {
+            return;
+          }
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      }
+
+      function setRemFontSize(baseSize, baseWidth) {
+        var baseSize = baseSize || 20,
+          baseWidth = baseWidth || 375,
+          clientWidth = document.documentElement.clientWidth;
+        if(clientWidth < 320) {
+          clientWidth = 320;
+        }
+        if(clientWidth > 750) {
+          clientWidth = 750;
+        }
+        document.getElementsByTagName('html')[0].style.fontSize = clientWidth / baseSize + 'px'
+      }
+      setRemFontSize();
+      window.addEventListener("resize", function () {
+        setTimeout(function () {
+          setRemFontSize();
+        }, 200)
+      });
+      const baseSize = parseFloat(document.getElementsByTagName('html')[0].style.fontSize);// px / this = rem
+
+      function pxToRem(num) {
+        if(/rem$/.test(num))return num;
+        if(isNaN(parseFloat(num)))return num;
+        return parseFloat(num) / baseSize + 'rem'
+      }
+
+      function remToPx(num) {
+        if(/px$/.test(num))return num;
+        if(isNaN(parseFloat(num)))return num;
+        return parseFloat(num) * baseSize;
+      }
+//      const url='127.0.0.1';
+      const url='http://172.16.1.20:9001';
+      console.warn('如果无法正常访问，请修改url变量为实际的服务器IP地址及端口')
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./build.js"></script>
+  </body>
+</html>

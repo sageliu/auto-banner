@@ -5,7 +5,7 @@ let storage = multer.diskStorage({
   //设置上传后文件路径，uploads文件夹会自动创建。
   destination: function (req, file, cb) {
     console.log('图片上传成功');
-    cb(null, path.join(__dirname,'../dist/bgImages/'))
+    cb(null, path.join(__dirname,'../dist/output/'))
   },
   //给上传文件重命名，获取添加后缀名
   filename: function (req, file, cb) {

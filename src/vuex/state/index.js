@@ -1,5 +1,5 @@
 const state = {
-  imgUrl: {lp: '/dist/bgImages/lp.png',
+  imgUrl: {lp: '/dist/output/lp.png',
     // banner:'',
     // twitter:''
   },
